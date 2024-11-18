@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Crear Tabla";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="tableName">Nombre de la tabla</label>
+        <input type="text" class="form-control" id="tableName" name="tableName" required />
+    </div>
+
+    <h4>Columnas</h4>
+    <div id="columnsContainer">
+        <div class="form-group">
+            <label for="columnName">Nombre de la columna</label>
+            <input type="text" class="form-control" name="columnNames[]" required />
+        </div>
+        <div class="form-group">
+            <label for="columnType">Tipo de columna</label>
+            <select class="form-control" name="columnTypes[]" required>
+                <option value="INT">INT</option>
+                <option value="VARCHAR(255)">VARCHAR(255)</option>
+                <option value="DATETIME">DATETIME</option>
+            </select>
+        </div>
+    </div>
+
+    <button type="button" id="addColumn" class="btn btn-secondary">Agregar Columna</button>
+    <br />
+    <button type="submit" class="btn btn-primary">Crear Tabla</button>
+</form>
+
+@if (ViewData["ErrorMessage"] != null)
+
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewData["ErrorMessage"]
+    </div>
+}
+
+@if (ViewData["SuccessMessage"] != null)
+
+{
+    <div class="alert alert-success" role="alert">
+        @ViewData["SuccessMessage"]
+    </div>
+}
+
+<script>
+    document.getElementById("addColumn").addEventListener("click", function () {
+        let columnDiv = document.createElement("div");
+        columnDiv.classList.add("form-group");
+
+        columnDiv.innerHTML = `
+                <label for="columnName">Nombre de la columna</label>
+                <input type="text" class="form-control" name="columnNames[]" required />
+                <label for="columnType">Tipo de columna</label>
+                <select class="form-control" name="columnTypes[]" required>
+                <option value="INT">INT</option>
+                <option value="VARCHAR(255)">VARCHAR(255)</option>
+                <option value="DATETIME">DATETIME</option>
+                </select>
+            `;
+
+        document.getElementById("columnsContainer").appendChild(columnDiv);
+    });
+</script>
